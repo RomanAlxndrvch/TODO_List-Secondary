@@ -1,27 +1,29 @@
 import React from 'react';
 import './App.css';
+import {List, TaskType} from "./List";
 
 function App() {
+
+
+    let tasks1: Array<TaskType> = [
+        {id: 1, title: 'CSS', isDone: true},
+        {id: 2, title: 'JS', isDone: false},
+        {id: 3, title: 'React', isDone: false},
+    ]
+
+    let tasks2: Array<TaskType> = [
+        {id: 1, title: 'Terminator', isDone: true},
+        {id: 2, title: 'XXX', isDone: false},
+        {id: 3, title: 'Gentlemen', isDone: false},
+    ]
+
+
     return (
-        <div className="App">
-            <div>
-                <h3>What to learn</h3>
-                <div>
-                    <input/>
-                    <button>+</button>
-                </div>
-                <ul>
-                    <li><input type="checkbox" checked={true}/> <span>HTML&CSS</span></li>
-                    <li><input type="checkbox" checked={true}/> <span>JS</span></li>
-                    <li><input type="checkbox" checked={false}/> <span>React</span></li>
-                </ul>
-                <div>
-                        <button>All</button>
-                        <button>Active</button>
-                        <button>Completed</button>
-                </div>
-            </div>
+        <div>
+            <List title={'What to learn?'} tasks={tasks1}/>
+            <List title={'Movies'} tasks={tasks2}/>
         </div>
+
     );
 }
 
