@@ -13,6 +13,7 @@ type PropsType = {
 
 export function List(props: PropsType) {
 
+
     return (
         <div className="App">
             <div>
@@ -22,12 +23,18 @@ export function List(props: PropsType) {
                     <button>+</button>
                 </div>
                 <ul>
-                    <li><input type="checkbox" checked={props.tasks[0].isDone}/> <span>{props.tasks[0].title}</span>
-                    </li>
-                    <li><input type="checkbox" checked={props.tasks[1].isDone}/> <span>{props.tasks[1].title}</span>
-                    </li>
-                    <li><input type="checkbox" checked={props.tasks[2].isDone}/> <span>{props.tasks[2].title}</span>
-                    </li>
+                    {
+                        props.tasks.map((e, index) => {
+                                return <li key={e.id}>
+                                    <input type="checkbox" checked={e.isDone}/> <span>{e.title}</span>
+                                    <button onClick={() => {
+                                        console.log(e.id)
+                                    }}>x
+                                    </button>
+                                </li>
+                            }
+                        )
+                    }
                 </ul>
                 <div>
                     <button>All</button>

@@ -9,12 +9,12 @@ function App() {
         {id: 1, title: 'CSS', isDone: true},
         {id: 2, title: 'JS', isDone: false},
         {id: 3, title: 'React', isDone: false},
+        {id: 4, title: 'Redux', isDone: false},
     ]
 
     let tasks2: Array<TaskType> = [
         {id: 1, title: 'Terminator', isDone: true},
         {id: 2, title: 'XXX', isDone: false},
-        {id: 3, title: 'Gentlemen', isDone: false},
     ]
 
 
