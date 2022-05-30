@@ -9,11 +9,10 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
+    removeTasks:(e:number) => void
 }
 
 export function List(props: PropsType) {
-
-
     return (
         <div className="App">
             <div>
@@ -27,9 +26,7 @@ export function List(props: PropsType) {
                         props.tasks.map((e, index) => {
                                 return <li key={e.id}>
                                     <input type="checkbox" checked={e.isDone}/> <span>{e.title}</span>
-                                    <button onClick={() => {
-                                        console.log(e.id)
-                                    }}>x
+                                    <button onClick={() =>props.removeTasks(e.id) }>x
                                     </button>
                                 </li>
                             }
