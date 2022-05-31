@@ -18,7 +18,6 @@ function App() {
         console.log(resultTasks)
     }
 
-
     return (
         <div>
             <List title={'What to learn?'} tasks={tasks} removeTasks={removeTask}/>
