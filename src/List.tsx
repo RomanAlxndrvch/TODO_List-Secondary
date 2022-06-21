@@ -6,15 +6,16 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
-
 type PropsType = {
+    id: string
     title: string
     tasks: Array<TaskType>
-    removeTasks: (e: string) => void
-    changeFilter: (e: FilteredValuesType) => void
-    addTask: (task: string) => void
-    changeStatus: (taskId: string, isDone: boolean) => void
-    filter: string
+    removeTasks: (e: string, todolistId: string) => void
+    changeFilter: (e: FilteredValuesType, todoListId: string) => void
+    addTask: (task: string, todolistId: string) => void
+    changeStatus: (taskId: string, isDone: boolean, todolistId: string) => void
+    filter: FilteredValuesType
+    removeTodolist: (e: string) => void
 }
 
 export function List(props: PropsType) {
@@ -24,7 +25,7 @@ export function List(props: PropsType) {
 
     const addTaskButtonHandler = () => {
         if (input.trim() !== '') {
-            props.addTask(input.trim())
+            props.addTask(input.trim(), props.id)
             setInput('')
         }
         else {
@@ -40,15 +41,20 @@ export function List(props: PropsType) {
             addTaskButtonHandler()
         }
     }
-    const onAllBtnHandler = () => props.changeFilter('all')
-    const onActiveBtnHandler = () => props.changeFilter('active')
-    const onCompletedBtnHandler = () => props.changeFilter('completed')
+    const onAllBtnHandler = () => props.changeFilter('all', props.id)
+    const onActiveBtnHandler = () => props.changeFilter('active', props.id)
+    const onCompletedBtnHandler = () => props.changeFilter('completed', props.id)
+    const removeTodolist = () => {
+        props.removeTodolist(props.id)
+    }
 
 
     return (
         <div className="App">
             <div>
-                <h3>{props.title}</h3>
+                <h3>{props.title}
+                    <button onClick={removeTodolist}>X</button>
+                </h3>
                 <div>
                     <input
                         className={'error'}
@@ -63,10 +69,10 @@ export function List(props: PropsType) {
                     {
                         props.tasks.map((task) => {
                                 const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                    props.changeStatus(task.id, e.currentTarget.checked)
+                                    props.changeStatus(task.id, e.currentTarget.checked, props.id)
                                 }
                                 const onRemoveHandler = () => {
-                                    props.removeTasks(task.id)
+                                    props.removeTasks(task.id, props.id)
                                 }
                                 return (
                                     <li className={task.isDone ? 'is-done' : ''} key={task.id}>
