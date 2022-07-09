@@ -1,5 +1,6 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import {FilteredValuesType} from "./App";
+import {AddItemForm} from "./AddItemForm";
 
 export type TaskType = {
     id: string
@@ -19,35 +20,15 @@ type PropsType = {
 }
 
 export function List(props: PropsType) {
-
-    const [input, setInput] = useState('')
-    const [error, setError] = useState<string | null>(null)
-
-    const addTaskButtonHandler = () => {
-        if (input.trim() !== '') {
-            props.addTask(input.trim(), props.id)
-            setInput('')
-        }
-        else {
-            setError('Title is required!')
-        }
-    }
-    const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setInput(e.currentTarget.value)
-        setError(null)
-    }
-    const onKeyDownButtonHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.ctrlKey && e.key === 'Enter') {
-            addTaskButtonHandler()
-        }
-    }
     const onAllBtnHandler = () => props.changeFilter('all', props.id)
     const onActiveBtnHandler = () => props.changeFilter('active', props.id)
     const onCompletedBtnHandler = () => props.changeFilter('completed', props.id)
     const removeTodolist = () => {
         props.removeTodolist(props.id)
     }
-
+    const addTask = (title: string) => {
+        props.addTask(title, props.id)
+    }
 
     return (
         <div className="App">
@@ -55,16 +36,7 @@ export function List(props: PropsType) {
                 <h3>{props.title}
                     <button onClick={removeTodolist}>X</button>
                 </h3>
-                <div>
-                    <input
-                        className={'error'}
-                        value={input}
-                        onChange={onChangeInputHandler}
-                        onKeyDown={onKeyDownButtonHandler}/>
-
-                    <button onClick={addTaskButtonHandler}>+</button>
-                    {error && <div className={'error-message'}>Field is required!</div>}
-                </div>
+                <AddItemForm addItem={addTask}/>
                 <ul>
                     {
                         props.tasks.map((task) => {
@@ -104,6 +76,5 @@ export function List(props: PropsType) {
             </div>
         </div>
     )
-
 }
 
