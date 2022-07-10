@@ -6,11 +6,11 @@ type AddItemFormPropsType = {
 
 export function AddItemForm(props: AddItemFormPropsType) {
 
-    const [input, setInput] = useState('')
+    const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
     const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setInput(e.currentTarget.value)
+        setTitle(e.currentTarget.value)
         setError(null)
     }
     const onKeyDownButtonHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -19,9 +19,9 @@ export function AddItemForm(props: AddItemFormPropsType) {
         }
     }
     const addTaskButtonHandler = () => {
-        if (input.trim() !== '') {
-            props.addItem(input.trim())
-            setInput('')
+        if (title.trim() !== '') {
+            props.addItem(title.trim())
+            setTitle('')
         }
         else {
             setError('Title is required!')
@@ -31,7 +31,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
     return <div>
         <input
             className={error ? 'error' : ''}
-            value={input}
+            value={title}
             onChange={onChangeInputHandler}
             onKeyDown={onKeyDownButtonHandler}/>
 
