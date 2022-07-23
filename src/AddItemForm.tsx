@@ -1,4 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Button, IconButton, TextField} from "@mui/material";
+import {ControlPoint} from "@mui/icons-material";
+
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -9,9 +12,11 @@ export function AddItemForm(props: AddItemFormPropsType) {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
+
     const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
         setError(null)
+
     }
     const onKeyDownButtonHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.ctrlKey && e.key === 'Enter') {
@@ -25,17 +30,29 @@ export function AddItemForm(props: AddItemFormPropsType) {
         }
         else {
             setError('Title is required!')
+
         }
     }
 
     return <div>
-        <input
+        {/*        <input
             className={error ? 'error' : ''}
             value={title}
             onChange={onChangeInputHandler}
-            onKeyDown={onKeyDownButtonHandler}/>
+            onKeyDown={onKeyDownButtonHandler}/>*/}
 
-        <button onClick={addTaskButtonHandler}>+</button>
-        {error && <div className={'error-message'}>Field is required!</div>}
+        <TextField
+            label="Type Value"
+            variant="outlined"
+            error={!!error}
+            className={error ? 'error' : ''}
+            value={title}
+            onChange={onChangeInputHandler}
+            onKeyDown={onKeyDownButtonHandler}
+            helperText={error}/>
+
+        <IconButton onClick={addTaskButtonHandler} color={"primary"}>
+            <ControlPoint fontSize={"large"}/>
+        </IconButton>
     </div>
 }
