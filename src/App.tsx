@@ -7,12 +7,12 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from "@mui/icons-material";
 
 export type FilteredValuesType = 'all' | 'completed' | 'active'
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilteredValuesType
 }
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
