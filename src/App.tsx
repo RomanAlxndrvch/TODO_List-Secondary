@@ -43,20 +43,20 @@ function App() {
         }
     }
 
-    function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
-        let tasks = tasksObj[todolistId]
-        let task = tasks.find(task => task.id === taskId)
-        if (task) {
-            task.isDone = isDone
-        }
-        setTasksObj({...tasksObj})
-    }
-
     function changeTaskTitle(newValue: string, taskId: string, todoListId: string) {
         let tasks = tasksObj[todoListId]
         let task = tasks.find(task => task.id === taskId)
         if (task) {
             task.title = newValue
+        }
+        setTasksObj({...tasksObj})
+    }
+
+    function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
+        let tasks = tasksObj[todolistId]
+        let task = tasks.find(task => task.id === taskId)
+        if (task) {
+            task.isDone = isDone
         }
         setTasksObj({...tasksObj})
     }
