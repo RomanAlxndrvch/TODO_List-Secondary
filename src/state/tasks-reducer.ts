@@ -1,6 +1,7 @@
 import {TasksStateType} from "../App";
 import {TaskType} from "../List";
 import {v1} from "uuid";
+import {AddTodolistsActionType} from "./todolists-reducer";
 
 type RemoveTaskActionType = {
     type: 'REMOVE_TASK',
@@ -34,7 +35,13 @@ type changeTaskTitleActionType = {
     }
 }
 
-type ActionsType = RemoveTaskActionType | addTaskActionType | changeTaskStatusActionType | changeTaskTitleActionType
+
+type ActionsType =
+    RemoveTaskActionType
+    | addTaskActionType
+    | changeTaskStatusActionType
+    | changeTaskTitleActionType
+    | AddTodolistsActionType
 
 export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksStateType => {
     switch (action.type) {
@@ -58,13 +65,16 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksS
             }
         }
         case "CHANGE_TASK_TITLE": {
-            return {...state,
+            return {
+                ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId].map(el => el.id === action.payload.taskId ? {
                     ...el,
                     title: action.payload.title
                 } : el)
             }
         }
+        case "ADD-TODOLIST":
+            return {...state, [action.todolistId]: []}
         default: {
             throw new Error('Wrong Type!')
         }
