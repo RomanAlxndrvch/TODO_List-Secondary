@@ -1,7 +1,7 @@
 import {TasksStateType} from "../App";
 import {TaskType} from "../List";
 import {v1} from "uuid";
-import {AddTodolistsActionType} from "./todolists-reducer";
+import {AddTodolistsActionType, RemoveTodolistsActionType} from "./todolists-reducer";
 
 type RemoveTaskActionType = {
     type: 'REMOVE_TASK',
@@ -35,13 +35,13 @@ type changeTaskTitleActionType = {
     }
 }
 
-
 type ActionsType =
     RemoveTaskActionType
     | addTaskActionType
     | changeTaskStatusActionType
     | changeTaskTitleActionType
     | AddTodolistsActionType
+    | RemoveTodolistsActionType
 
 export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksStateType => {
     switch (action.type) {
@@ -75,12 +75,19 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksS
         }
         case "ADD-TODOLIST":
             return {...state, [action.todolistId]: []}
+        case "REMOVE-TODOLIST": {
+            /*  const {[action.todolistId]: restValues, ...newState} = state
+              return newState*/
+
+            const stateCopy = {...state}
+            delete stateCopy[action.todolistId]
+            return stateCopy
+        }
         default: {
             throw new Error('Wrong Type!')
         }
     }
 }
-
 
 export const removeTaskAC = (todolistId: string, id: string): RemoveTaskActionType => {
     return {
@@ -95,7 +102,6 @@ export const removeTaskAC = (todolistId: string, id: string): RemoveTaskActionTy
 export const addTaskAC = (title: string, todolistId: string): addTaskActionType => {
     return {type: "ADD_TASK", payload: {title, todolistId}}
 }
-
 
 export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: string): changeTaskStatusActionType => {
     return {
