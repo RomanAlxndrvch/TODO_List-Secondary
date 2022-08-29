@@ -44,6 +44,7 @@ type ActionsType =
     | RemoveTodolistsActionType
 
 export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksStateType => {
+
     switch (action.type) {
         case 'REMOVE_TASK': {
             return {
@@ -74,7 +75,9 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksS
             }
         }
         case "ADD-TODOLIST":
-            return {...state, [action.todolistId]: []}
+            return {[action.todolistId]: [], ...state}
+
+
         case "REMOVE-TODOLIST": {
             /*  const {[action.todolistId]: restValues, ...newState} = state
               return newState*/
