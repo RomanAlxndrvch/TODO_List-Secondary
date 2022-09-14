@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {FilteredValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -26,7 +26,7 @@ type PropsType = {
     changeTaskTitle: (newValue: string, taskId: string, todoListId: string) => void
 }
 
-export function List(props: PropsType) {
+export const List = React.memo((props: PropsType) => {
     const onAllBtnHandler = () => props.changeFilter('all', props.id)
     const onActiveBtnHandler = () => props.changeFilter('active', props.id)
     const onCompletedBtnHandler = () => props.changeFilter('completed', props.id)
@@ -36,8 +36,16 @@ export function List(props: PropsType) {
     const changeTodoListTitle = (newTitle: string) => {
         props.changeTodoListTitle(newTitle, props.id)
     }
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
+    }, [])
+
+    let tasksForTodoList = props.tasks
+    if (props.filter === 'active') {
+        tasksForTodoList = props.tasks.filter((e) => !e.isDone)
+    }
+    if (props.filter === 'completed') {
+        tasksForTodoList = props.tasks.filter((e) => e.isDone)
     }
 
     return (
@@ -51,7 +59,7 @@ export function List(props: PropsType) {
                 <AddItemForm addItem={addTask}/>
                 <div>
                     {
-                        props.tasks.map((task) => {
+                        tasksForTodoList.map((task) => {
                                 const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                                     props.changeTaskStatus(task.id, e.currentTarget.checked, props.id)
                                 }
@@ -93,5 +101,5 @@ export function List(props: PropsType) {
             </div>
         </div>
     )
-}
+})
 
