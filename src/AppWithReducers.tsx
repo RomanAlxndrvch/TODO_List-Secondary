@@ -38,36 +38,36 @@ function AppWithReducers() {
     // Function for changing state
     const removeTask = useCallback((id: string, todolistId: string) => {
         dispatch(removeTaskAC(todolistId, id))
-    }, [])
+    }, [dispatch])
 
     const addTask = useCallback((title: string, todolistId: string) => {
         dispatch(addTaskAC(title, todolistId))
-    }, [])
+    }, [dispatch])
 
     const changeTaskTitle = useCallback((newValue: string, taskId: string, todoListId: string) => {
         dispatch(changeTaskTitleAC(taskId, newValue, todoListId))
-    }, [])
+    }, [dispatch])
 
     const changeStatus = useCallback((taskId: string, isDone: boolean, todolistId: string) => {
         dispatch(changeTaskStatusAC(taskId, isDone, todolistId))
-    }, [])
+    }, [dispatch])
 
     const changeFilter = useCallback((value: FilteredValuesType, todoListId: string) => {
         dispatch(changeTodolistFilterAC(value, todoListId))
-    }, [])
+    }, [dispatch])
 
     const removeTodolist = useCallback((todolistId: string) => {
         dispatch(removeTodolistAC(todolistId))
-    }, [])
+    }, [dispatch])
 
     const changeTodoListTitle = useCallback((newTitle: string, id: string) => {
         dispatch(changeTodolistTitleAC(id, newTitle))
-    }, [])
+    }, [dispatch])
 
     const addTodoList = useCallback((title: string) => {
         let action = addTodolistAC(title)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
 
     return (
