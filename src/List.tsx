@@ -1,10 +1,10 @@
 import React, {useCallback} from "react";
 import {FilteredValuesType} from "./App";
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {AddItemForm} from "./components/AddItemForm/AddItemForm";
+import {EditableSpan} from "./components/EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {Task} from "./Task";
+import {Task} from "./components/Task/Task";
 
 
 export type TaskType = {
