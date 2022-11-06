@@ -20,12 +20,11 @@ export type TodolistType = {
     "addedDate": string,
     "order": number
 }
-type ResponseType<D> = {
+type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     data: D
 }
-
 export type TaskType = {
     description: string
     title: string
@@ -44,6 +43,20 @@ type GetTasksResponse = {
     totalCount: number
     items: Array<TaskType>
 }
+type AddTaskResponse = {
+    resultCode: number
+    messages: Array<string>,
+    data: TaskType
+}
+export type UpdateTaskType = {
+    title: string
+    description: string
+    completed: boolean
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+}
 
 export const todolistsAPI = {
     getTodolists() {
@@ -53,12 +66,21 @@ export const todolistsAPI = {
         return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists/', {title: title})
     },
     deleteTodolist(id: string) {
-        return axios.delete<ResponseType<{}>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, settings)
+        return instance.delete<ResponseType>(`todo-lists/${id}`)
     },
     updateTodolist(id: string, title: string) {
-        return axios.put<ResponseType<{}>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title: title}, settings)
+        return instance.put<ResponseType>(`/todo-lists/${id}`, {title: title})
     },
     getTasks(id: string) {
-        return axios.get<GetTasksResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}/tasks`, settings)
+        return instance.get<GetTasksResponse>(`todo-lists/${id}/tasks`)
+    },
+    deleteTask(todolistId: string, taskId: string) {
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    },
+    updateTask(todolistId: string, taskId: string, model: UpdateTaskType) {
+        return instance.put(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+    },
+    addTask(todolistId: string, taskTitle: string) {
+        return instance.post<AddTaskResponse>(`todo-lists/${todolistId}/tasks`, {title: taskTitle})
     }
 }
