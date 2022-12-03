@@ -28,11 +28,4 @@ test('todoLists should set to state', () => {
 })
 
 
-test('empty arrays should be added after todoList been set', () => {
-
-    const action = setTodoListsActionCreator([{id: '3', title: 'New todoList1', addedDate: '', order: 0},
-        {id: '4', title: 'New todoList2', addedDate: '', order: 0}])
-
-    let endState = tasksReducer({}, action)
-})
 
