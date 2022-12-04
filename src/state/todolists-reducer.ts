@@ -1,5 +1,7 @@
 import {v1} from 'uuid';
-import {TodolistType} from '../api/todolists-api'
+import {todolistsAPI, TodolistType} from '../api/todolists-api'
+import {AppDispatch} from "./store";
+
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST',
@@ -99,3 +101,17 @@ export const setTodoListsActionCreator = (todoLists: Array<TodolistType>): SetTo
         todoLists
     }
 }
+
+/*export const fetchTodoLists = (dispatch: Dispatch) => {
+    todolistsAPI.getTodolists().then(res => {
+        dispatch(setTodoListsActionCreator(res.data))
+    })
+}*/
+
+export const fetchTodoListsTC = () => (dispatch: AppDispatch) => {
+    todolistsAPI.getTodolists().then(res => {
+        dispatch(setTodoListsActionCreator(res.data))
+    })
+}
+
+
