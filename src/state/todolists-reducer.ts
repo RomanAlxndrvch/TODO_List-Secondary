@@ -2,7 +2,6 @@ import {v1} from 'uuid';
 import {todolistsAPI, TodolistType} from '../api/todolists-api'
 import {AppDispatch} from "./store";
 
-
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST',
     id: string
@@ -27,7 +26,7 @@ export type SetTodoListsActionType = {
     todoLists: Array<TodolistType>
 }
 
-type ActionsType = RemoveTodolistActionType | AddTodolistActionType
+export type TodoListsActionsType = RemoveTodolistActionType | AddTodolistActionType
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType | SetTodoListsActionType
 
@@ -41,7 +40,7 @@ export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
 }
 
-export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> => {
+export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: TodoListsActionsType): Array<TodolistDomainType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             return state.filter(tl => tl.id !== action.id)
@@ -113,5 +112,6 @@ export const fetchTodoListsTC = () => (dispatch: AppDispatch) => {
         dispatch(setTodoListsActionCreator(res.data))
     })
 }
+
 
 
