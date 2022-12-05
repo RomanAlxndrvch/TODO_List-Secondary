@@ -1,8 +1,7 @@
 import {setTasksAC, tasksReducer} from "./tasks-reducer";
-import {addTodolistAC} from "../../srcOld/state/todolists-reducer";
 import {TasksStateType} from "../App";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
-import {setTodoListsActionCreator} from "./todolists-reducer";
+import {addTodolistAC, setTodoListsActionCreator} from "./todolists-reducer";
 
 let startState: TasksStateType
 
@@ -85,5 +84,4 @@ test('tasks should be added to todolist ', () => {
 
     expect(endState['todoListId1'].length).toBe(3)
     expect(endState['todoListId2'].length).toBe(0)
-
 })

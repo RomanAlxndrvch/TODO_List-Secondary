@@ -101,11 +101,6 @@ export const setTodoListsActionCreator = (todoLists: Array<TodolistType>): SetTo
     }
 }
 
-/*export const fetchTodoLists = (dispatch: Dispatch) => {
-    todolistsAPI.getTodolists().then(res => {
-        dispatch(setTodoListsActionCreator(res.data))
-    })
-}*/
 
 export const fetchTodoListsTC = () => (dispatch: AppDispatch) => {
     todolistsAPI.getTodolists().then(res => {
