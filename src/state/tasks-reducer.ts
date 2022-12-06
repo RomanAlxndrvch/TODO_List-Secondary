@@ -1,11 +1,7 @@
 import {TasksStateType} from '../App';
-import {
-    AddTodolistActionType,
-    RemoveTodolistActionType,
-    SetTodoListsActionType
-} from './todolists-reducer';
-import {TaskStatuses, TaskType, todolistsAPI} from '../api/todolists-api'
-import {AppDispatch} from "./store";
+import {AddTodolistActionType, RemoveTodolistActionType, SetTodoListsActionType} from './todolists-reducer';
+import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from '../api/todolists-api'
+import {AppDispatch, AppRootStateType} from "./store";
 
 
 export type RemoveTaskActionType = {
@@ -114,7 +110,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
         case 'ADD-TODOLIST': {
             return {
                 ...state,
-                [action.todolistId]: []
+                [action.todoList.id]: []
             }
         }
         case 'REMOVE-TODOLIST': {
@@ -177,6 +173,43 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: AppDi
         dispatch(addTaskAC(res.data.data.item))
     })
 }
+
+export type UpdateDomainTaskType = {
+    title?: string
+    description?: string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: string
+    deadline?: string
+}
+
+export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskType, todoListId: string) => (dispatch: AppDispatch, getState: () => AppRootStateType) => {
+    const state = getState()
+    const task = state.tasks[todoListId].find(el => el.id === taskId)
+
+    if (!task) {
+        console.warn('TASK DID NOT FIND IN STATE')
+        return
+    }
+
+    const apiModel: UpdateTaskModelType = {
+        deadline: task.deadline,
+        description: task.description,
+        priority: task.priority,
+        startDate: task.startDate,
+        status: task.status,
+        title: task.title,
+        ...domainModel
+    }
+
+
+    const model: UpdateTaskModelType = {...apiModel}
+    todolistsAPI.updateTask(todoListId, taskId, model).then(res => {
+        dispatch(changeTaskStatusAC(taskId, status, todoListId))
+    })
+}
+
+
 ///////////////////////////////////////////////////////////////
 export const deleteTaskTC2 = (todoListId: string, taskId: string) => async (dispatch: AppDispatch) => {
     await todolistsAPI.deleteTask(todoListId, taskId)
